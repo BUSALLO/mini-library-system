@@ -37,19 +37,24 @@ def add_book():
     
     
 def view_books():
-    file = open("books.txt", "r")
+    try:
+        file = open("books.txt", "r")
+    except FileNotFoundError:
+        print("No books file found. Create it first with option 1.")
+        return
+
     lines = file.readlines()
     file.close()
+
+    if not lines:
+        print("\nBooks in library: no books found.")
+        return
 
     print("\nBooks in library:")
     for i, book in enumerate(lines):
         print(i, book.strip())
-        
-        
-        
-        
-        
-        
+
+
 def update_book():
     file = open("books.txt", "r")
     books = file.readlines()
@@ -108,6 +113,7 @@ while True:
     print("2. Write File")
     print("3. Add Book")
     print("4. View Books")
+    print("r. Read Books")
     print("5. Update Book")
     print("6. Delete Book")
     print("7. Search Book")
@@ -122,6 +128,8 @@ while True:
     elif choice == "3":
         add_book()
     elif choice == "4":
+        view_books()
+    elif choice.lower() == "r":
         view_books()
     elif choice == "5":
         update_book()
